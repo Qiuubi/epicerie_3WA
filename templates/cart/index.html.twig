@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier
+{% endblock %}
+
+{% block body %}
+	{% if app.user %}
+		<h1>Votre panier</h1>
+		<div class="container">
+			{% if cartContent | length > 0 %}
+				<table class="table table-danger table-striped col-5" style="margin-top: 10px; width: 90%;">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th></th>
+							<th>Image</th>
+							<th>Nom du produit</th>
+							<th>Quantité</th>
+							<th>Prix</th>
+							<th>Prix total</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for content in cartContent %}
+							<tr>
+								<td>{{ content.product.id }}</td>
+								<td></td>
+								<td><img src="{{ content.product.image }}" style="height:50px;"></td>
+								<td>{{ content.product.name }}</td>
+								<td>{{ content.quantity}}</td>
+								<!-- <td>{#{ product.quantity}#}</td> -->
+								<td>{{ content.product.price }}
+									€</td>
+								<td>{{ content.product.price * content.quantity }}
+									€</td>
+								<td>
+									<a href="{{ path('remove_cart', {'id': content.product.id }) }}" product="{{ content.product.id }}" class="btn btn-danger btn-del-product btn-sm">
+										<i class="fas fa-trash"></i>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+						<tr>Frais de livraison : 6€</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="6">Total définitif :</td>
+							<td>{{ total }}
+								€
+																								+ 6 €, soit
+								<strong>{{ total + 6 }}
+									euros</strong>
+							</td>
+							<td>
+								<a href="{{ path('checkout')}}" class="btn btn-success">Valider votre commande</a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			{% else %}
+
+				<h2>Votre panier est vide !</h2>
+
+			{% endif %}
+		</div>
+	{% else %}
+		<p>Vous n'avez pas de compte, veuillez
+			<a href="{{ path('register') }}">créer un compte</a>
+			ou vous
+			<a href="{{ path('login') }}">connecter.</a>
+		</p>
+	{% endif %}
+{% endblock %}

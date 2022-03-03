@@ -33,7 +33,7 @@ class ProductCrudController extends AbstractCrudController
             MoneyField::new('price')->setCurrency('EUR'),
             IntegerField::new('stock'),
             AssociationField::new("category"),
-            AssociationField::new("allergen"),
+            AssociationField::new("allergens")
         ];
     }
 }

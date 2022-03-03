@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -35,8 +37,15 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
-    #[ORM\ManyToMany(targetEntity: Allergen::class)]
-    private $allergen;
+    #[ORM\ManyToMany(targetEntity: Allergen::class, inversedBy: 'products')]
+    private $allergens;
+
+    private $quantity = 0;
+
+    public function __construct()
+    {
+        $this->allergens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,14 +136,38 @@ class Product
         return $this;
     }
 
-    public function getAllergen(): ?Allergen
+    public function getQuantity()
     {
-        return $this->allergen;
+        return $this->quantity;
     }
 
-    public function setAllergen(?Allergen $allergen): self
+    public function setQuantity($quantity)
     {
-        $this->allergen = $allergen;
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Allergen>
+     */
+    public function getAllergens(): Collection
+    {
+        return $this->allergens;
+    }
+
+    public function addAllergen(Allergen $allergen): self
+    {
+        if (!$this->allergens->contains($allergen)) {
+            $this->allergens[] = $allergen;
+        }
+
+        return $this;
+    }
+
+    public function removeAllergen(Allergen $allergen): self
+    {
+        $this->allergens->removeElement($allergen);
 
         return $this;
     }

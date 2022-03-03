@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier
+{% endblock %}
+
+{% block body %}
+	{% if app.user %}
+		<h2>
+			Yay raboule ton fric !</h2>
+		<img src="https://c.tenor.com/T-kEnebwraEAAAAC/money-give-me-money.gif"/>
+		<p>
+			<a href="{{ path('home') }}">
+				Retour à l'accuel</a>
+		</p>
+	{% else %}
+		<p>Vous n'avez pas de compte, veuillez
+			<a href="{{ path('register') }}">créer un compte</a>
+			ou vous
+			<a href="{{ path('login') }}">connecter.</a>
+		</p>
+	{% endif %}
+
+{% endblock %}

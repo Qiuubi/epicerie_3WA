@@ -28,7 +28,7 @@ class OrderLine
     private $Product;
 
     #[ORM\ManyToOne(targetEntity: Discount::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $discount;
 
     public function getId(): ?int

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Response;
 use App\Controller\Admin\ProductCrudController;
+use App\Entity\Allergen;
 use App\Entity\Category;
 use App\Entity\Order;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,8 +53,9 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
             MenuItem::linkToCrud('Produits', 'fa fa-file-text', Product::class),
+            MenuItem::linkToCrud('Allergènes', 'fa fa-file-text', Allergen::class),
             MenuItem::linkToCrud('Catégories', 'fa fa-file-text', Category::class),
-            MenuItem::linkToCrud('Commmandes', 'fa fa-file-text', Order::class)
+            MenuItem::linkToCrud('Commmandes', 'fa fa-file-text', Order::class),
         ];
     }
 }
